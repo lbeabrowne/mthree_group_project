@@ -9,14 +9,14 @@ from datetime import datetime
 
 #assume the placeholder containing the weather info from the main script is called "data" 
 def user_log(data):
-
-    connection = pyodbc.connect("""
-                            DRIVER={ODBC Driver 17 for SQL Server};
-                            SERVER=temp-project.database.windows.net;
-                            DATABASE=weatherdb;
-                            UID=mthreeproject;
-                            PWD=m3m3MTHREE;
-                            """)
+    connection = pyodbc.connect(
+    "DRIVER={ODBC Driver 17 for SQL Server};"
+    "SERVER=temp-project.database.windows.net;"
+    "DATABASE=weatherdb;"
+    "UID=mthreeproject;"
+    "PWD=m3m3MTHREE;",
+    timeout=30
+)
 
     cursor = connection.cursor()
 

@@ -2,13 +2,14 @@
 import pyodbc
 
 try:
-    connection = pyodbc.connect("""
-                            DRIVER={ODBC Driver 17 for SQL Server};
-                            SERVER=temp-project.database.windows.net;
-                            DATABASE=weatherdb;
-                            UID=mthreeproject;
-                            PWD=m3m3MTHREE;
-                            """)
+    connection = pyodbc.connect(
+    "DRIVER={ODBC Driver 17 for SQL Server};"
+    "SERVER=temp-project.database.windows.net;"
+    "DATABASE=weatherdb;"
+    "UID=mthreeproject;"
+    "PWD=m3m3MTHREE;",
+    timeout=30
+)
     
     cursor = connection.cursor()
     cursor.execute("SELECT * FROM logHist")
@@ -27,7 +28,7 @@ try:
 
     cursor.close()
     connection.close()
-    print("Connection closed.")
+    print("\nConnection closed.")
 
 except pyodbc.Error as ex:
     print("\nException:", ex)
