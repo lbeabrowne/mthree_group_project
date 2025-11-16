@@ -1,5 +1,5 @@
-#This is a module that you would import into the main script
-#Make sure you have "ODBC Driver 17 for SQL Server" installed on your machinem, link:
+#This is a module built for importing into the main script
+#Make sure you have "ODBC Driver Version 17 for SQL Server" (not v18) downloaded and installed on your machinem, skip the configurtion, link:
 #  https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server
 
 import pyodbc
@@ -9,7 +9,7 @@ from datetime import datetime
 #It creates a one-way street sending fetched data(json/ py dict) to the Azure SQL DB, and return no values.
 # Another scipt - logs_monitor.py is created to review the tables and values stored in DB. It simply runs in terminal without the need to use any SQl managament tool.
 
-#"data" is the parameter set in the function(or prodcedure). It will be replaced by the given variable(json/ py dict) you assigned in the finalized main script.
+# "data" is the parameter set in the function(or prodcedure). In the main script, you would stuff it with the variable of the fetched data(json/ py dict).
 def user_log(data):
     connection = pyodbc.connect(
     "DRIVER={ODBC Driver 17 for SQL Server};"
