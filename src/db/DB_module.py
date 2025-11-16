@@ -1,13 +1,14 @@
-#Make sure you have "ODBC Driver 17 for SQL Server" installed on your machinem link:
+#Make sure you have "ODBC Driver 17 for SQL Server" installed on your machinem, link:
 #  https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server
 
 import pyodbc
 from datetime import datetime
 
-#user_log is a prodcedure created for main scripts that returns no value back
-#It is a one-way street that send the data to the Azure SQL DB. The way to review the data is writen to logs_monitor.py
+#user_log is a prodcedure written for deploying into the main scripts. It returns no value.
+#It creates a one-way street sending fetched data(json/ py dict) to the Azure SQL DB. 
+# logs_monitor.py is a script run in python to review the tables and values stored in DB. It simply runs in terminal without the need to use any SQl managament tool.
 
-#assume the placeholder containing the weather info from the main script is called "data" 
+#"data" is the parameter set in the function. It will be replaced by the given variable you assigned in the main script.
 def user_log(data):
     connection = pyodbc.connect(
     "DRIVER={ODBC Driver 17 for SQL Server};"
@@ -20,7 +21,8 @@ def user_log(data):
 
     cursor = connection.cursor()
 
-#Automation for table creation. With IF NOT EXISTS error handling. It would only create once in first run, avoding repeat creation.
+#Automation for table creation. With IF NOT EXISTS error handling, table would be only created once without repeating when user_log runs again.
+# Note that: column names are presumed. Need to modify once we have the final version.
     cursor.execute("""
         IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='logHist')
         BEGIN

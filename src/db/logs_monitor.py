@@ -1,4 +1,4 @@
-# Run this script to review all existing search logs stored in Azure SQL DB
+# Run this py script to review all existing search logs stored in Azure SQL DB
 import pyodbc
 
 try:
