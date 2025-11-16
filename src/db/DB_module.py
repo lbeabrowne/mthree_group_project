@@ -1,14 +1,15 @@
+#This is a module that you would import into the main script
 #Make sure you have "ODBC Driver 17 for SQL Server" installed on your machinem, link:
 #  https://learn.microsoft.com/en-us/sql/connect/odbc/download-odbc-driver-for-sql-server
 
 import pyodbc
 from datetime import datetime
 
-#user_log is a prodcedure written for deploying into the main scripts. It returns no value.
-#It creates a one-way street sending fetched data(json/ py dict) to the Azure SQL DB. 
-# logs_monitor.py is a script run in python to review the tables and values stored in DB. It simply runs in terminal without the need to use any SQl managament tool.
+#user_log() is a prodcedure that bridges the main script with the Azure  SQL DB.
+#It creates a one-way street sending fetched data(json/ py dict) to the Azure SQL DB, and return no values.
+# Another scipt - logs_monitor.py is created to review the tables and values stored in DB. It simply runs in terminal without the need to use any SQl managament tool.
 
-#"data" is the parameter set in the function. It will be replaced by the given variable you assigned in the main script.
+#"data" is the parameter set in the function(or prodcedure). It will be replaced by the given variable(json/ py dict) you assigned in the finalized main script.
 def user_log(data):
     connection = pyodbc.connect(
     "DRIVER={ODBC Driver 17 for SQL Server};"
@@ -22,7 +23,7 @@ def user_log(data):
     cursor = connection.cursor()
 
 #Automation for table creation. With IF NOT EXISTS error handling, table would be only created once without repeating when user_log runs again.
-# Note that: column names are presumed. Need to modify once we have the final version.
+# Note that: column names are presumed. Needa modify later when the main script has been formed.
     cursor.execute("""
         IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='logHist')
         BEGIN
@@ -58,4 +59,4 @@ def user_log(data):
     connection.commit()
     connection.close()
 
-#Completely disconnect to the DB server
+#Completely disconnect from the DB server
