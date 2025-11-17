@@ -29,7 +29,7 @@ try:
     
     # Print all logs
    
-    cursor.execute("SELECT * FROM logHist")
+    cursor.execute("SELECT * FROM logHist ORDER BY timestamp DESC")
     print("\n Logs - Users' browsing history \n")
 
     columns = [column[0] for column in cursor.description]
