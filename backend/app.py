@@ -1,12 +1,121 @@
-"""
-app.py
+import os
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+import requests
+from dotenv import load_dotenv
 
-This file is the ENTRY POINT for our Python backend (FastAPI app).
+# Load environment variables from backend/.env
+load_dotenv()
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+WEATHER_BASE_URL = "http://api.weatherapi.com/v1/current.json"
 
-What this file does:
-- Creates the FastAPI application object
-- Configures CORS so our React frontend can call this backend
-- Loads the weather API key from a .env file / environment variables
-- Defines the /api/weather endpoint used by the frontend
-"""
+app = FastAPI(
+    title="UK Weather Backend",
+    description="Happy-path backend for the UK Weather Finder React app.",
+    version="1.0.0",
+)
 
+origins = [
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    # Add frontend deployment URL here if needed
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
+
+def get_weather_emoji(weather_code):
+
+    if weather_code == 1000:  # Sunny/Clear
+        return "☀"
+    elif weather_code in [1003, 1006, 1009]:  # Cloudy
+        return "☁"
+    elif weather_code in [1030, 1135, 1147]:  # Mist/Fog
+        return "🌫"
+    elif weather_code in [1063, 1180, 1183, 1186, 1189, 1192, 1195, 1240, 1243, 1246]:  # Rain
+        return "🌧"
+    elif weather_code in [1066, 1210, 1213, 1216, 1219, 1222, 1225, 1255, 1258]:  # Snow
+        return "❄"
+    elif weather_code in [1087, 1273, 1276, 1279, 1282]:  # Thunder
+        return "⛈"
+    elif weather_code in [1114, 1117, 1204, 1207, 1237, 1249, 1252, 1261, 1264]:  # Sleet/Ice
+        return "🧊"
+    else:
+        return "🌤"
+
+
+@app.get("/api/health")
+def health_check():
+    return {"status": "ok"}
+
+
+@app.get("/api/weather")
+def get_weather(city):
+
+    params = {
+        "key": WEATHER_API_KEY,
+        "q": city,
+        "aqi": "no",
+    }
+
+    response = requests.get(WEATHER_BASE_URL, params=params, timeout=5)
+    
+    data = response.json()
+
+    location = data["location"]
+    current = data["current"]
+    condition = current["condition"]
+
+    temp_c = current["temp_c"]
+    temp_f = current["temp_f"]
+    feelslike_c = current["feelslike_c"]
+    feelslike_f = current["feelslike_f"]
+    humidity = current["humidity"]
+    description = condition["text"]
+    code = condition["code"]
+    icon_raw = condition["icon"]
+
+    # Fix icon URL (WeatherAPI returns paths starting with //)
+    icon_url = "https:" + icon_raw if icon_raw.startswith("//") else icon_raw
+
+    emoji = get_weather_emoji(code)
+
+    result = {
+        "city": location["name"],
+        "country": location["country"],
+        "localtime": location["localtime"],
+        "temperature": temp_c,       
+        "temperature_f": temp_f,      
+        "feels_like": feelslike_c,    
+        "feels_like_f": feelslike_f,  
+        "humidity": humidity,
+        "description": description,
+        "icon": icon_url,
+        "code": code,
+        "emoji": emoji,
+    }
+
+    return result
+
+
+
+# NOTE FOR YOUR GROUP:
+# Run locally:
+#   1. Activate venv
+#   2. cd backend
+#   3. pip install -r requirements.txt   (first time)
+#   4. Create backend/.env with WEATHER_API_KEY=your_real_key_here
+#   5. uvicorn app:app --reload
+#
+# Test:
+#   - http://127.0.0.1:8000/api/health
+#   - http://127.0.0.1:8000/api/weather?city=London
+#
+# The React frontend calls:
+#   http://127.0.0.1:8000/api/weather?city=<cityname>
