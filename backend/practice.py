@@ -18,7 +18,7 @@ print("Condition:", data["current"]["condition"]["text"])
 
 import requests
 
-API_KEY = "a7cbcd75e87343a788e115600251411"
+API_KEY = "8d69cc8d4b80497eb68134844251711"
 city = "New York"
 date = "2025-11-20"  # format: YYYY-MM-DD
 

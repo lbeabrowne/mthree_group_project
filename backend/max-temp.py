@@ -1,6 +1,6 @@
 import requests
 
-API_KEY = "a7cbcd75e87343a788e115600251411"
+API_KEY = "8d69cc8d4b80497eb68134844251711"
 
 # Include region info for ambiguous cities
 uk_cities = [

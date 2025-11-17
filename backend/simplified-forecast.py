@@ -3,20 +3,27 @@ import requests
 API_KEY = "8d69cc8d4b80497eb68134844251711"
 
 # Include region info for ambiguous cities
-uk_cities = [
-    "Bath", "Birmingham", "Bradford", "Brighton & Hove", "Bristol", "Cambridge",
-    "Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Colchester",
-    "Coventry", "Derby", "Doncaster", "Durham", "Ely", "Exeter", "Gloucester",
-    "Hereford", "Kingston upon Hull", "Lancaster", "Leeds", "Leicester", "Lichfield",
-    "Lincoln", "Liverpool", "London", "Manchester", "Milton Keynes", "Newcastle upon Tyne",
-    "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth",
-    "Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton",
-    "Southend-on-Sea", "St Albans", "Stoke on Trent", "Sunderland", "Truro",
-    "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester",
-    "York", "Armagh", "Bangor, Northern Ireland", "Belfast", "Lisburn", "Londonderry",
-    "Newry", "Aberdeen", "Dundee", "Dunfermline", "Edinburgh", "Glasgow", "Inverness",
-    "Perth", "Stirling", "Bangor, Wales", "Cardiff", "Newport, Wales", "St Asaph",
-    "St Davids", "Swansea", "Wrexham"
+uk_top_20_cities = [
+    "London",
+    "Birmingham",
+    "Glasgow",
+    "Liverpool",
+    "Bristol",
+    "Manchester",
+    "Sheffield",
+    "Leeds",
+    "Edinburgh",
+    "Leicester",
+    "Coventry",
+    "Bradford",
+    "Cardiff",
+    "Belfast",
+    "Nottingham",
+    "Newcastle upon Tyne",
+    "Stoke-on-Trent",
+    "Southampton",
+    "Portsmouth",
+    "Derby"
 ]
 
 # change this part so that user chooses date
@@ -26,7 +33,7 @@ max_temp = -100
 min_rain = 100
 best_city = ""
 
-for city in uk_cities:
+for city in uk_top_20_cities:
     try:
         url = "http://api.weatherapi.com/v1/forecast.json"
         params = {
