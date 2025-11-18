@@ -103,6 +103,55 @@ def get_weather(city):
 
     return result
 
+uk_cities = [
+    "Bath", "Birmingham", "Bradford", "Brighton & Hove", "Bristol", "Cambridge",
+    "Canterbury", "Carlisle", "Chelmsford", "Chester", "Chichester", "Colchester",
+    "Coventry", "Derby", "Doncaster", "Durham", "Ely", "Exeter", "Gloucester",
+    "Hereford", "Kingston upon Hull", "Lancaster", "Leeds", "Leicester", "Lichfield",
+    "Lincoln", "Liverpool", "London", "Manchester", "Milton Keynes", "Newcastle upon Tyne",
+    "Norwich", "Nottingham", "Oxford", "Peterborough", "Plymouth", "Portsmouth",
+    "Preston", "Ripon", "Salford", "Salisbury", "Sheffield", "Southampton",
+    "Southend-on-Sea", "St Albans", "Stoke on Trent", "Sunderland", "Truro",
+    "Wakefield", "Wells", "Westminster", "Winchester", "Wolverhampton", "Worcester",
+    "York", "Armagh", "Bangor, Northern Ireland", "Belfast", "Lisburn", "Londonderry",
+    "Newry", "Aberdeen", "Dundee", "Dunfermline", "Edinburgh", "Glasgow", "Inverness",
+    "Perth", "Stirling", "Bangor, Wales", "Cardiff", "Newport, Wales", "St Asaph",
+    "St Davids", "Swansea", "Wrexham"
+]
+
+@app.get("/api/hottest-city")
+def get_hottest_uk_city():
+    max_temp = -100
+    hottest_city = None
+
+    for city in uk_cities:
+        try:
+            params = {
+                "key": WEATHER_API_KEY, 
+                "q": city, 
+                "aqi": "no"
+            }
+            
+            response = requests.get(WEATHER_BASE_URL, params=params, timeout=5)
+            data = response.json()
+
+            if "current" in data and data["location"]["country"] == "United Kingdom":
+                temp = data["current"]["temp_c"]
+                if temp > max_temp:
+                    max_temp = temp
+                    hottest_city = {
+                        "city": data["location"]["name"],
+                        "region": data["location"]["region"],
+                        "country": data["location"]["country"],
+                        "temp_c": temp,
+                        "localtime": data["location"]["localtime"],
+                        "condition": data["current"]["condition"]["text"],
+                        "icon": data["current"]["condition"]["icon"],
+                    }
+        except Exception as e:
+            print(f"Skipping {city} due to error: {e}")
+
+    return hottest_city
 
 
 # NOTE FOR YOUR GROUP:
