@@ -51,10 +51,10 @@ function App() {
           <p className="description">{weather.description}</p>
 
           <p className="temp">
-            {Math.round(weather.temperature)}°C
+            {Math.round(weather.temperature)} °C
             <span className="feels-like">
               {" "}
-              (feels like {Math.round(weather.feels_like)}°C)
+              (feels like {Math.round(weather.feels_like)} °C)
             </span>
           </p>
 
