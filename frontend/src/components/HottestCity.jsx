@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Spinner from "./Spinner";
 import "./Spinner.css";
-import "./HottestCity.css"
 
 function HottestCity() {
   const [data, setData] = useState(null);
@@ -21,9 +20,11 @@ function HottestCity() {
   };
 
   return (
-    <div>
-      <button onClick={fetchHottestCity} className="hottest-city-button" >
-        HOTTEST UK CITY RIGHT NOW
+    <div className="hottest-card">
+      <h2 className="hottest-title">Hottest UK city right now</h2>
+
+      <button onClick={fetchHottestCity} className="search-button">
+        Find hottest city
       </button>
 
       {/* Spinner appears ONLY while loading */}
@@ -31,13 +32,12 @@ function HottestCity() {
 
       {/* Show result once loading is done */}
       {!loading && data && (
-        <div className="hottest-city-card">
+        <div className="hottest-result">
           <h3>
-            Hottest City: {data.city}
-            {/* Show region if it is different from city */}
+            {data.city}
             {data.region && data.region !== data.city ? `, ${data.region}` : ""}
           </h3>
-          <p>Temperature: {Math.round(data.temp_c)} °C</p>
+          <p>Temperature: {data.temp_c} °C</p>
           <p>Condition: {data.condition}</p>
           <img src={data.icon} alt="icon" />
         </div>

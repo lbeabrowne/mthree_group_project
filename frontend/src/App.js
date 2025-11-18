@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import HottestCity from "./components/HottestCity";
+import BestHolidaySpot from "./components/BestHolidaySpot";
 
 function App() {
   const [city, setCity] = useState("");
@@ -69,7 +70,12 @@ function App() {
           )}
         </div>
       )}
-      <HottestCity />
+
+      {/* Bottom row: hottest city (left) + best holiday spot (right) */}
+      <div className="bottom-row">
+        <HottestCity />
+        <BestHolidaySpot />
+      </div>
     </div>
   );
 }
