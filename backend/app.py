@@ -3,6 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 from dotenv import load_dotenv
+from mthree_group_project.backend.db_logger import user_log
+
 
 # Load environment variables from backend/.env
 load_dotenv()
@@ -56,7 +58,8 @@ def health_check():
 
 
 @app.get("/api/weather")
-def get_weather(city):
+def get_weather(city, uid = "anonymous"):
+
 
     params = {
         "key": WEATHER_API_KEY,
@@ -100,6 +103,12 @@ def get_weather(city):
         "code": code,
         "emoji": emoji,
     }
+
+    user_log(
+        city=result["city"],
+        temp_c=result["temperature"],
+        user_id=uid,
+    )
 
     return result
 
