@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 from dotenv import load_dotenv
-from mthree_group_project.backend.db_logger import user_log
+from db_logger import user_log
 
 
 # Load environment variables from backend/.env
