@@ -21,10 +21,10 @@ function HottestCity() {
 
   return (
     <div className="hottest-card">
-      <h2 className="hottest-title">Hottest UK city right now</h2>
+      <h2 className="hottest-title">Hottest UK City Right Now</h2>
 
       <button onClick={fetchHottestCity} className="search-button">
-        Find hottest city
+        Find Hottest City
       </button>
 
       {/* Spinner appears ONLY while loading */}

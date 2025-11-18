@@ -28,7 +28,7 @@ function BestHolidaySpot() {
 
   return (
     <div className="best-holiday-card">
-      <h2 className="card-title">Best UK holiday spot</h2>
+      <h2 className="card-title">Best UK Holiday Spot</h2>
 
       <form className="best-holiday-form" onSubmit={fetchBestCity}>
         <input
@@ -49,6 +49,7 @@ function BestHolidaySpot() {
           <h3>{data.best_city}</h3>
           <p>Max temp: {data.max_temp} °C</p>
           <p>Chance of rain: {data.min_rain}%</p>
+          <img src={data.icon} alt="icon" />
         </div>
       )}
     </div>

@@ -170,6 +170,7 @@ def find_best_city(date: str):
         "max_temp": max_temp,
         "min_rain": min_rain,
         "best_city": best_city,
+        "icon": data["forecast"]["forecastday"][0]["day"]["condition"]["icon"]
     }
 
 
@@ -216,7 +217,7 @@ def get_hottest_uk_city():
                         "temp_c": temp,
                         "localtime": data["location"]["localtime"],
                         "condition": data["current"]["condition"]["text"],
-                        "icon": data["current"]["condition"]["icon"],
+                        "icon": data["current"]["condition"]["icon"]
                     }
         except Exception as e:
             print(f"Skipping {city} due to error: {e}")
