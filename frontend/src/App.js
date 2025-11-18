@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
+import HottestCity from "./components/HottestCity";
 
 function App() {
   const [city, setCity] = useState("");
@@ -68,6 +69,7 @@ function App() {
           )}
         </div>
       )}
+      <HottestCity />
     </div>
   );
 }
