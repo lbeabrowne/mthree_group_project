@@ -32,9 +32,11 @@ function HottestCity() {
       {!loading && data && (
         <div>
           <h3>
-            Hottest City: {data.city}, {data.region}
+            Hottest City: {data.city}
+            {/* Show region if it is different from city */}
+            {data.region && data.region !== data.city ? `, ${data.region}` : ""}
           </h3>
-          <p>Temperature: {data.temp_c}°C</p>
+          <p>Temperature: {data.temp_c} °C</p>
           <p>Condition: {data.condition}</p>
           <img src={data.icon} alt="icon" />
         </div>
