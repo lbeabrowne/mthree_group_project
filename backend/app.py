@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 import requests
 from dotenv import load_dotenv
@@ -104,11 +104,15 @@ def get_weather(city, uid = "anonymous"):
         "emoji": emoji,
     }
 
-    user_log(
+    try:
+        user_log(
         city=result["city"],
         temp_c=result["temperature"],
-        user_id=uid,
     )
+    except Exception as e:
+        print(f"DB logging failed: {e}")
+
+
 
     return result
 
@@ -127,6 +131,64 @@ uk_cities = [
     "Perth", "Stirling", "Bangor, Wales", "Cardiff", "Newport, Wales", "St Asaph",
     "St Davids", "Swansea", "Wrexham"
 ]
+
+def find_best_city(date: str):
+    max_temp = -100
+    min_rain = 100
+    best_city = ""
+
+    for city in uk_cities:
+        try:
+            url = "http://api.weatherapi.com/v1/forecast.json"
+            params = {
+                "key": WEATHER_API_KEY,
+                "q": city,
+                "dt": date,
+            }
+            response = requests.get(url, params=params, timeout=5)
+            data = response.json()
+
+            if "forecast" in data and data["location"]["country"] == "United Kingdom":
+                forecast_day = data["forecast"]["forecastday"][0]["day"]
+                temp = forecast_day["maxtemp_c"]
+                rain = forecast_day["daily_chance_of_rain"]
+
+                if temp > max_temp and rain < min_rain:
+                    max_temp = temp
+                    min_rain = rain
+                    region = data["location"]["region"] or ""
+                    best_city = (
+                        f"{data['location']['name']}, {region}"
+                        if region
+                        else data["location"]["name"]
+                    )
+        except Exception as e:
+            print(f"Skipping {city} due to error: {e}")
+
+    return {
+        "date": date,
+        "max_temp": max_temp,
+        "min_rain": min_rain,
+        "best_city": best_city,
+        "icon": data["forecast"]["forecastday"][0]["day"]["condition"]["icon"]
+    }
+
+
+@app.get("/api/best-city")
+def best_city_endpoint(date: str):
+    if not date:
+        raise HTTPException(
+            status_code=400,
+            detail="Query parameter 'date' is required, e.g. /api/best-city?date=2025-11-21",
+        )
+
+    result = find_best_city(date)
+
+    if not result["best_city"]:
+        raise HTTPException(status_code=404, detail="No suitable city found")
+
+    return result
+
 
 @app.get("/api/hottest-city")
 def get_hottest_uk_city():
@@ -155,7 +217,7 @@ def get_hottest_uk_city():
                         "temp_c": temp,
                         "localtime": data["location"]["localtime"],
                         "condition": data["current"]["condition"]["text"],
-                        "icon": data["current"]["condition"]["icon"],
+                        "icon": data["current"]["condition"]["icon"]
                     }
         except Exception as e:
             print(f"Skipping {city} due to error: {e}")

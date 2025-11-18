@@ -36,6 +36,13 @@
   font-weight: 600;
 }
 
+/* Hover effect */
+.search-button:hover {
+  background-color: red;   /* fill the button */
+  color: white;            /* change text color */
+  transform: scale(1.05);  /* slight grow effect */
+}
+
 .info,
 .error {
   margin-top: 1rem;
@@ -48,7 +55,7 @@
 .weather-card {
   margin-top: 1.5rem;
   padding: 1.5rem 2rem;
-  background: #111827;
+  background: #202f52;
   border-radius: 1rem;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
@@ -84,6 +91,78 @@
   margin-top: 0.75rem;
 }
 
+/* bottom-row layout for extra cards */
+.bottom-row {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  justify-content: center;
+  align-items: stretch; /* stretch children to same height */
+}
+
+/* card for the hottest city section */
+.hottest-card {
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  max-width: 360px;
+  background: #1e2c49;
+  flex: 1; /* take equal width with best-holiday-card */
+  display: flex;
+  flex-direction: column;
+}
+
+.hottest-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.hottest-result {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* card for the best holiday spot */
+.best-holiday-card {
+  padding: 1.5rem 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  max-width: 360px;
+  background: #1e2c49;
+  flex: 1; /* take equal width with hottest-card */
+  display: flex;
+  flex-direction: column;
+}
+
+.card-title {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.best-holiday-form {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.date-input {
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+}
+
+.best-holiday-result {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.95rem;
+}
+
+/* Spinner styles */
 .spinner-container {
   display: flex;
   align-items: center;
@@ -97,6 +176,10 @@
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

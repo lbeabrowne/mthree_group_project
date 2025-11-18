@@ -2,21 +2,22 @@ import os
 import pyodbc
 from dotenv import load_dotenv
 
+# Load environment variables from backend/.env
 load_dotenv()
 
 SQL_SERVER = os.getenv("SQL_SERVER")       # e.g. "temp-project.database.windows.net"
 SQL_DATABASE = os.getenv("SQL_DATABASE")   # e.g. "weatherdb"
 SQL_USER = os.getenv("SQL_USER")           # e.g. "mthreeproject"
-SQL_PASSWORD = os.getenv("SQL_PASSWORD")   # e.g. "your_password_here"
+SQL_PASSWORD = os.getenv("SQL_PASSWORD")   # e.g. "m3m3MTHREE"
 
-def user_log(city: str, temp_c: float | None, user_id: str | None = None) -> None:
+
+def user_log(city: str, temp_c: float | None) -> None:
     """
     Log a search into Azure SQL.
 
     Stores:
-    - user_id (optional)
     - city name
-    - temperature in °C
+    - temperature in °C (can be NULL)
     - timestamp (handled by DB default GETDATE())
     """
 
@@ -43,9 +44,8 @@ def user_log(city: str, temp_c: float | None, user_id: str | None = None) -> Non
         BEGIN
             CREATE TABLE logHist (
                 id INT IDENTITY PRIMARY KEY,
-                user_id NVARCHAR(100) NULL,
                 city NVARCHAR(100),
-                temp_c FLOAT NULL,
+                temp_c FLOAT,
                 timestamp DATETIME DEFAULT GETDATE()
             )
         END
@@ -55,8 +55,8 @@ def user_log(city: str, temp_c: float | None, user_id: str | None = None) -> Non
 
     # Insert a row for this search
     cursor.execute(
-        "INSERT INTO logHist (user_id, city, temp_c) VALUES (?, ?, ?)",
-        (user_id, city, temp_c),
+        "INSERT INTO logHist (city, temp_c) VALUES (?, ?)",
+        (city, temp_c),
     )
 
     connection.commit()
