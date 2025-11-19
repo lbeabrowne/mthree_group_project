@@ -1,11 +1,16 @@
+import os
+import requests
+from dotenv import load_dotenv
+
+# Load environment variables from backend/.env
+load_dotenv()
+WEATHER_API_KEY = os.getenv("WEATHER_API_KEY")
+
 # for current weather
 
-import requests
-
-API_KEY = "a7cbcd75e87343a788e115600251411"
 city = "New York"
 
-url = f"http://api.weatherapi.com/v1/current.json?key={API_KEY}&q={city}"
+url = f"http://api.weatherapi.com/v1/current.json?key={WEATHER_API_KEY}&q={city}"
 
 response = requests.get(url)
 data = response.json()
@@ -16,14 +21,11 @@ print("Condition:", data["current"]["condition"]["text"])
 
 # for forecast
 
-import requests
-
-API_KEY = "8d69cc8d4b80497eb68134844251711"
 city = "New York"
 date = "2025-11-20"  # format: YYYY-MM-DD
 
 # Fetch forecast for the specific date
-url = f"http://api.weatherapi.com/v1/forecast.json?key={API_KEY}&q={city}&dt={date}"
+url = f"http://api.weatherapi.com/v1/forecast.json?key={WEATHER_API_KEY}&q={city}&dt={date}"
 response = requests.get(url)
 data = response.json()
 
