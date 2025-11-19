@@ -76,9 +76,7 @@ def get_weather(city, uid = "anonymous"):
     condition = current["condition"]
 
     temp_c = current["temp_c"]
-    temp_f = current["temp_f"]
     feelslike_c = current["feelslike_c"]
-    feelslike_f = current["feelslike_f"]
     humidity = current["humidity"]
     description = condition["text"]
     code = condition["code"]
@@ -93,10 +91,8 @@ def get_weather(city, uid = "anonymous"):
         "city": location["name"],
         "country": location["country"],
         "localtime": location["localtime"],
-        "temperature": temp_c,       
-        "temperature_f": temp_f,      
-        "feels_like": feelslike_c,    
-        "feels_like_f": feelslike_f,  
+        "temperature": temp_c,             
+        "feels_like": feelslike_c,     
         "humidity": humidity,
         "description": description,
         "icon": icon_url,
@@ -111,8 +107,6 @@ def get_weather(city, uid = "anonymous"):
     )
     except Exception as e:
         print(f"DB logging failed: {e}")
-
-
 
     return result
 
@@ -170,7 +164,7 @@ def find_best_city(date: str):
         "max_temp": max_temp,
         "min_rain": min_rain,
         "best_city": best_city,
-        "icon": data["forecast"]["forecastday"][0]["day"]["condition"]["icon"]
+        "icon": forecast_day["condition"]["icon"]
     }
 
 
@@ -232,6 +226,9 @@ def get_hottest_uk_city():
 #   3. pip install -r requirements.txt   (first time)
 #   4. Create backend/.env with WEATHER_API_KEY=your_real_key_here
 #   5. uvicorn app:app --reload
+#   6. cd frontend
+#   7. npm install
+#   8. npm start -> can then view frontend in browser
 #
 # Test:
 #   - http://127.0.0.1:8000/api/health
