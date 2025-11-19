@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Spinner from "./Spinner";
-import "./Spinner.css";
 
 function BestHolidaySpot() {
   const [date, setDate] = useState("");

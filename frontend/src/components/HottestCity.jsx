@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Spinner from "./Spinner";
-import "./Spinner.css";
 
 function HottestCity() {
   const [data, setData] = useState(null);

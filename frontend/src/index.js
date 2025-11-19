@@ -1,6 +1,5 @@
 // src/index.js
 // This is the entry point of our React app.
-// ChatGPT says this means "This is the first JavaScript file that actually starts your app running in the browser."
 // It takes the <App /> component and renders it into the HTML page (public/index.html).
 
 import React from "react";
