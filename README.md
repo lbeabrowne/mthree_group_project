@@ -1,5 +1,3 @@
-# Welcome to our mthree group project! 👋
-
 <div id="header" align="center">
   <h1>Welcome to our mthree group project! 👋  </h1>
   <h3>Conor Norman, Saaheb Kohli, Lok Tin Cheng, Lucy Browne​</h3>
