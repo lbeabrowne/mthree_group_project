@@ -3,6 +3,8 @@
   <h3>Conor Norman, Saaheb Kohli, Lok Tin Cheng, Lucy Browne​</h3>
 </div>
 
+![Project Screenshot](UK_weather_application.png)
+
 ### 📚 What this includes:
 - This was a group project of final 4 days of Mthree Tech Training course.
 - We built a front-end React application for users to search for current and forecast weather results, using connection via FastAPI to back-end Python script where data is fetched from weatherAPI.com (free weather API source).
