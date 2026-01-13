@@ -1,9 +1,8 @@
 <div id="header" align="center">
   <h1>Welcome to our mthree group project! 👋  </h1>
   <h3>Conor Norman, Saaheb Kohli, Lok Tin Cheng, Lucy Browne​</h3>
+  <img src="UK_weather_application.png" width="500">
 </div>
-
-![Project Screenshot](UK_weather_application.png)
 
 ### 📚 What this includes:
 - This was a group project of final 4 days of Mthree Tech Training course.
